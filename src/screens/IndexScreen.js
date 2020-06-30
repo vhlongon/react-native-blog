@@ -20,10 +20,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 20,
+    color: 'darkgray',
   },
   createIcon: {
     fontSize: 20,
     paddingRight: 10,
+    color: 'darkgray',
   },
   list: {
     borderBottomWidth: 1,

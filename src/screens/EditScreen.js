@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useBlogContext } from '../context/BlogContext';
 
 const styles = StyleSheet.create({
@@ -27,29 +27,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 16,
   },
+  icon: { fontSize: 24, marginRight: 10, color: 'darkgray' },
 });
-const CreateScreen = ({ navigation }) => {
-  const { addPost } = useBlogContext();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const EditScreen = ({ navigation }) => {
+  const { posts, editPost } = useBlogContext();
+  const post = posts.find(({ id }) => id === navigation.getParam('id'));
+  const [title, setTitle] = useState(post.title);
+  const [content, setContent] = useState(post.content);
 
   const handlePress = () => {
-    addPost({ title, content }, () => {
+    editPost({ id: post.id, title, content }, () => {
       navigation.navigate('Index');
     });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create</Text>
+      <Text style={styles.title}>Edit</Text>
       <Text style={styles.label}>Enter title:</Text>
       <TextInput style={styles.input} onChangeText={setTitle} value={title} />
       <Text style={styles.label}>Enter content:</Text>
       <TextInput style={styles.input} onChangeText={setContent} value={content} />
-      <TouchableOpacity onPress={handlePress} title="Add post">
+      <TouchableOpacity onPress={handlePress} title="Edit">
         <View style={styles.button}>
           <Text>
-            Add post <Feather name="plus" style={styles.createIcon} />
+            Edit <Ionicons name="ios-create" style={styles.icon} />
           </Text>
         </View>
       </TouchableOpacity>
@@ -57,4 +59,4 @@ const CreateScreen = ({ navigation }) => {
   );
 };
 
-export default CreateScreen;
+export default EditScreen;
