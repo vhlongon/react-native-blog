@@ -16,8 +16,7 @@ const actions = {
     return { ...state, posts };
   },
   [EDIT_POST]: (state, payload) => {
-    console.log(payload);
-    const posts = state.posts.map(post => (post.id === payload.id ? { ...payload } : post));
+    const posts = state.posts.map(post => (post.id === payload.id ? payload : post));
     return { ...state, posts };
   },
 };

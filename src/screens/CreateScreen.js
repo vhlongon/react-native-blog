@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather } from '@expo/vector-icons';
 import { useBlogContext } from '../context/BlogContext';
+import BlogPostForm from '../components/BlogPostForm';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,31 +31,14 @@ const styles = StyleSheet.create({
 });
 const CreateScreen = ({ navigation }) => {
   const { addPost } = useBlogContext();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
 
-  const handlePress = () => {
-    addPost({ title, content }, () => {
+  const handleCreatePost = post => {
+    addPost(post, () => {
       navigation.navigate('Index');
     });
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create</Text>
-      <Text style={styles.label}>Enter title:</Text>
-      <TextInput style={styles.input} onChangeText={setTitle} value={title} />
-      <Text style={styles.label}>Enter content:</Text>
-      <TextInput style={styles.input} onChangeText={setContent} value={content} />
-      <TouchableOpacity onPress={handlePress} title="Add post">
-        <View style={styles.button}>
-          <Text>
-            Add post <Feather name="plus" style={styles.createIcon} />
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
+  return <BlogPostForm onSubmit={handleCreatePost} />;
 };
 
 export default CreateScreen;
