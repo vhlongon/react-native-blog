@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "./node_modules/.bin/eslint ./src/** --no-error-on-unmatched-pattern --fix"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
@@ -14,13 +15,30 @@
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
+    "react-native-gesture-handler": "^1.6.1",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
     "react-navigation-stack": "^2.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "babel-preset-expo": "~8.1.0"
+    "babel-eslint": "^10.1.0",
+    "babel-preset-expo": "~8.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.2",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "prettier": "^2.0.5"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid"
   },
   "private": true
 }
