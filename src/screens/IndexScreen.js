@@ -3,7 +3,7 @@ import { View, Text, FlatList, Button } from 'react-native';
 import { useBlogContext } from '../context/BlogContext';
 
 const IndexScreen = () => {
-  const { posts, addPost } = useBlogContext();
+  const { posts, addPost, removePost } = useBlogContext();
 
   return (
     <View>
@@ -14,6 +14,7 @@ const IndexScreen = () => {
         renderItem={({ item }) => <Text>{item.title}</Text>}
       />
       <Button onPress={addPost} title="Add post" />
+      <Button onPress={removePost} title="Remove post" />
     </View>
   );
 };
