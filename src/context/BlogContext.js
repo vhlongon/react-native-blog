@@ -1,16 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
-
-const BlogContext = createContext();
-
-export const useBlogContext = () => {
-  const context = useContext(BlogContext);
-
-  if (!context) {
-    throw new Error('useBlogContext should be used within a BlogProvider');
-  }
-
-  return context;
-};
+import createDataContext from './createDataContext';
 
 const ADD_POST = 'ADD_POST';
 const REMOVE_POST = 'REMOVE_POST';
@@ -27,20 +15,16 @@ const actions = {
 };
 const blogReducer = (state, { type }) => (actions[type] ? actions[type](state) : state);
 
-export const BlogProvider = ({ children, data = {} }) => {
-  const [{ posts }, dispatch] = useReducer(blogReducer, { posts: data.posts || [] });
-
-  const addPost = () => {
-    dispatch({ type: ADD_POST });
-  };
-
-  const removePost = () => {
-    dispatch({ type: REMOVE_POST });
-  };
-
-  return (
-    <BlogContext.Provider value={{ posts, addPost, removePost }}>{children}</BlogContext.Provider>
-  );
+const addPost = dispatch => () => {
+  dispatch({ type: ADD_POST });
 };
 
-export default BlogContext;
+const removePost = dispatch => () => {
+  dispatch({ type: REMOVE_POST });
+};
+
+export const { Context, Provider } = createDataContext(
+  blogReducer,
+  { addPost, removePost },
+  { posts: [] },
+);
