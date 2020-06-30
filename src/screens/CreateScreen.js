@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useBlogContext } from '../context/BlogContext';
 
 const styles = StyleSheet.create({
@@ -49,7 +49,7 @@ const CreateScreen = ({ navigation }) => {
       <TouchableOpacity onPress={handlePress} title="Add post">
         <View style={styles.button}>
           <Text>
-            Add post <Ionicons name="ios-create" size={24} color="black" />
+            Add post <Feather name="plus" style={styles.createIcon} />
           </Text>
         </View>
       </TouchableOpacity>
