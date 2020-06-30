@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
 });
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
   const { posts, addPost, removePost } = useBlogContext();
 
   return (
@@ -37,14 +37,16 @@ const IndexScreen = () => {
         style={styles.list}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <View style={styles.row}>
-            <Text style={styles.postTitle}>
-              {item.title} - id: {item.id}
-            </Text>
-            <TouchableOpacity onPress={() => removePost(item.id)}>
-              <Feather name="trash" style={styles.icon} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
+            <View style={styles.row}>
+              <Text style={styles.postTitle}>
+                {item.title} - id: {item.id}
+              </Text>
+              <TouchableOpacity onPress={() => removePost(item.id)}>
+                <Feather name="trash" style={styles.icon} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         )}
       />
       <Button onPress={addPost} title="Add post" />
