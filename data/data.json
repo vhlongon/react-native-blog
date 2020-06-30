@@ -1,1 +1,6 @@
-{ "posts": [{ "title": "Blog post #1" }, { "title": "Blog post #2" }] }
+{
+  "posts": [
+    { "id": "15543", "title": "Blog post #1" },
+    { "id": "78369", "title": "Blog post #2" }
+  ]
+}

@@ -1,20 +1,53 @@
 import React from 'react';
-import { View, Text, FlatList, Button } from 'react-native';
+import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Feather } from '@expo/vector-icons';
 import { useBlogContext } from '../context/BlogContext';
 
+const styles = StyleSheet.create({
+  title: { marginVertical: 20, textAlign: 'center', fontSize: 24 },
+  row: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderColor: 'gray',
+  },
+  postTitle: {
+    fontSize: 18,
+  },
+  icon: {
+    fontSize: 20,
+  },
+  list: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+});
 const IndexScreen = () => {
   const { posts, addPost, removePost } = useBlogContext();
 
   return (
     <View>
-      <Text>Posts:</Text>
+      <Text style={styles.title}>Posts</Text>
       <FlatList
         data={posts}
-        keyExtractor={({ title }) => title}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        style={styles.list}
+        keyExtractor={({ id }) => id}
+        renderItem={({ item }) => (
+          <View style={styles.row}>
+            <Text style={styles.postTitle}>
+              {item.title} - id: {item.id}
+            </Text>
+            <TouchableOpacity onPress={() => removePost(item.id)}>
+              <Feather name="trash" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        )}
       />
       <Button onPress={addPost} title="Add post" />
-      <Button onPress={removePost} title="Remove post" />
     </View>
   );
 };
