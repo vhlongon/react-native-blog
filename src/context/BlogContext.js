@@ -18,8 +18,12 @@ const actions = {
 const blogReducer = (state, { type, payload }) =>
   actions[type] ? actions[type](state, payload) : state;
 
-const addPost = dispatch => post => {
+const addPost = dispatch => (post, callback) => {
   dispatch({ type: ADD_POST, payload: post });
+  // sending a callback here is overkill for the use case
+  // but in a real world scenario we want to send a callback here
+  // run some async function like fetch and then run the callback
+  callback();
 };
 
 const removePost = dispatch => id => {

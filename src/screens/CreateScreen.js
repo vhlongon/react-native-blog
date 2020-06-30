@@ -34,8 +34,9 @@ const CreateScreen = ({ navigation }) => {
   const [content, setContent] = useState('Enter the content here');
 
   const handlePress = () => {
-    addPost({ title, content });
-    navigation.navigate('Index');
+    addPost({ title, content }, () => {
+      navigation.navigate('Index');
+    });
   };
 
   return (
