@@ -1,5 +1,8 @@
 import React, { createContext, useReducer } from 'react';
 
+// this abstraction is very helpful in cases where we need to create different contests
+// so each context only contains code specific for the context itself, i.e. the reducer and action creators
+// the boilerplate for creating the context itself is isolated here instead
 const boundActions = (actions, dispatch) =>
   Object.keys(actions).reduce((acc, key) => ({ ...acc, [key]: actions[key](dispatch) }), {});
 
