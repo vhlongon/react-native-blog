@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import createDataContext from './createDataContext';
 
 const ADD_POST = 'ADD_POST';
@@ -23,8 +24,20 @@ const removePost = dispatch => () => {
   dispatch({ type: REMOVE_POST });
 };
 
-export const { Context, Provider } = createDataContext(
+const { Context, Provider } = createDataContext(
   blogReducer,
   { addPost, removePost },
   { posts: [] },
 );
+
+const useBlogContext = () => {
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error('useBlogContext should be used within a BlogProvider');
+  }
+
+  return context;
+};
+
+export { Context, Provider, useBlogContext };
