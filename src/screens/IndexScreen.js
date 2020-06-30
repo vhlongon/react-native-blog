@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather } from '@expo/vector-icons';
 import { useBlogContext } from '../context/BlogContext';
@@ -21,13 +21,17 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
   },
+  createIcon: {
+    fontSize: 20,
+    paddingRight: 10,
+  },
   list: {
     borderBottomWidth: 1,
     borderColor: 'gray',
   },
 });
 const IndexScreen = ({ navigation }) => {
-  const { posts, addPost, removePost } = useBlogContext();
+  const { posts, removePost } = useBlogContext();
 
   return (
     <View>
@@ -49,9 +53,16 @@ const IndexScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
-      <Button onPress={addPost} title="Add post" />
     </View>
   );
 };
+
+IndexScreen.navigationOptions = ({ navigation }) => ({
+  headerRight: () => (
+    <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+      <Feather name="plus" style={styles.createIcon} />
+    </TouchableOpacity>
+  ),
+});
 
 export default IndexScreen;

@@ -5,11 +5,13 @@ import { Provider as BlogProvider } from './src/context/BlogContext';
 import data from './data/data.json';
 import IndexScreen from './src/screens/IndexScreen';
 import ShowScreen from './src/screens/ShowScreen';
+import CreateScreen from './src/screens/CreateScreen';
 
 const navigator = createStackNavigator(
   {
     Index: IndexScreen,
     Show: ShowScreen,
+    Create: CreateScreen,
   },
   {
     initialRouteName: 'Index',

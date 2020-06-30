@@ -5,9 +5,9 @@ const ADD_POST = 'ADD_POST';
 const REMOVE_POST = 'REMOVE_POST';
 
 const actions = {
-  [ADD_POST]: state => {
+  [ADD_POST]: (state, payload) => {
     const id = `${Math.floor(Math.random() * 99999)}`;
-    const posts = [...state.posts, { id, title: `Blog post #${state.posts.length + 1}` }];
+    const posts = [...state.posts, { id, ...payload }];
     return { ...state, posts };
   },
   [REMOVE_POST]: (state, payload) => {
@@ -18,8 +18,8 @@ const actions = {
 const blogReducer = (state, { type, payload }) =>
   actions[type] ? actions[type](state, payload) : state;
 
-const addPost = dispatch => () => {
-  dispatch({ type: ADD_POST });
+const addPost = dispatch => post => {
+  dispatch({ type: ADD_POST, payload: post });
 };
 
 const removePost = dispatch => id => {
