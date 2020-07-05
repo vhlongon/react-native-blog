@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "./node_modules/.bin/eslint ./src/** --no-error-on-unmatched-pattern --fix"
+    "lint": "./node_modules/.bin/eslint ./src/** --no-error-on-unmatched-pattern --fix",
+    "server": " npm run --prefix server db & npm run --prefix server tunnel"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
