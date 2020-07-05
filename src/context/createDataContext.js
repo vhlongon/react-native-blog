@@ -6,10 +6,10 @@ import React, { createContext, useReducer } from 'react';
 const boundActions = (actions, dispatch) =>
   Object.keys(actions).reduce((acc, key) => ({ ...acc, [key]: actions[key](dispatch) }), {});
 
-export default (reducer, actions = {}) => {
+export default (reducer, actions = {}, initialState) => {
   const Context = createContext();
-  const Provider = ({ children, data }) => {
-    const [state, dispatch] = useReducer(reducer, data);
+  const Provider = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
     const boundedActions = boundActions(actions, dispatch);
 
     return <Context.Provider value={{ ...state, ...boundedActions }}>{children}</Context.Provider>;

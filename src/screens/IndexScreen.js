@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather } from '@expo/vector-icons';
@@ -31,30 +31,55 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'gray',
   },
+  error: {
+    color: 'red',
+  },
 });
 const IndexScreen = ({ navigation }) => {
-  const { posts, removePost } = useBlogContext();
+  // this is an approach in the course but if you dont ommit the parameter in the deps it will
+  // end up in an infinite loop since getPosts is recreated on every rerender
+  // a much easier approach is to use (here in hooks/useFetch):
+  // const { data, pending, error } = useFetch('http://localhost:3000/blogposts');
+  // and just check for things there
+
+  const { posts, loading, error, removePost, getPosts } = useBlogContext();
+
+  useEffect(() => {
+    getPosts();
+
+    const listener = navigation.addListener('didFocus', () => {
+      getPosts();
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, [navigation]);
 
   return (
     <View>
       <Text style={styles.title}>Posts</Text>
-      <FlatList
-        data={posts}
-        style={styles.list}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
-            <View style={styles.row}>
-              <Text style={styles.postTitle}>
-                {item.title} - id: {item.id}
-              </Text>
-              <TouchableOpacity onPress={() => removePost(item.id)}>
-                <Feather name="trash" style={styles.icon} />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
+      {loading && <Text>Loading...</Text>}
+      {error && <Text style={styles.error}>Something went wrong: {error}</Text>}
+      {posts && (
+        <FlatList
+          data={posts}
+          style={styles.list}
+          keyExtractor={({ id }) => id}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
+              <View style={styles.row}>
+                <Text style={styles.postTitle}>
+                  {item.title} - id: {item.id}
+                </Text>
+                <TouchableOpacity onPress={() => removePost(item.id)}>
+                  <Feather name="trash" style={styles.icon} />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };

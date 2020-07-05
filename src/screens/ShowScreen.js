@@ -9,15 +9,22 @@ const styles = StyleSheet.create({
   title: { marginVertical: 20, textAlign: 'center', fontSize: 24 },
   content: { marginVertical: 10, fontSize: 18 },
   icon: { fontSize: 24, marginRight: 10, color: 'darkgray' },
+  error: { color: 'red' },
 });
 const ShowScreen = ({ navigation }) => {
-  const { posts } = useBlogContext();
+  const { posts = [], loading, error } = useBlogContext();
   const post = posts.find(({ id }) => id === navigation.getParam('id'));
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{post.title}</Text>
-      <Text style={styles.content}>{post.content}</Text>
+      {loading && <Text>Loading...</Text>}
+      {error && <Text style={styles.error}>Something went wrong: {error}</Text>}
+      {post && (
+        <View>
+          <Text style={styles.title}>{post.title}</Text>
+          <Text style={styles.content}>{post.content}</Text>
+        </View>
+      )}
     </View>
   );
 };
